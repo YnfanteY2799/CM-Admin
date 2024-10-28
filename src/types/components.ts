@@ -1,5 +1,3 @@
-import { ButtonVariants } from "@/utils/variants";
-
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { VariantProps } from "class-variance-authority";
 
@@ -7,8 +5,4 @@ import type { VariantProps } from "class-variance-authority";
 
 export interface RSC {
   children: ReactNode;
-}
-
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof ButtonVariants> {
-  asChild?: boolean;
 }
