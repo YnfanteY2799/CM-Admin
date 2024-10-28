@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,4 +5,56 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// User related Models <Sesion | Provided | AppUser>
+model User {
+  id             Int                @id @default(autoincrement()) @db.Integer
+  email          String             @unique @db.VarChar(255)
+  verified_email Boolean?           @default(false) @db.Boolean
+  password       String             @db.VarChar(255)
+  password_salt  String             @db.VarChar(255)
+  status_id      Int                @default(1) @db.SmallInt
+  status_Id      Int?               @db.SmallInt
+  create_time    DateTime?          @default(now()) @db.Date
+  update_time    DateTime?          @db.Date
+  Account_Status Account_Status?    @relation(fields: [status_Id], references: [id])
+  Active_Tokens  ActiveTempTokens[]
+  Session        Session[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime @map("expires_at")
+  user_id   Int
+  user      User     @relation(references: [id], fields: [user_id], onDelete: Cascade)
+}
+
+model ActiveTempTokens {
+  id           Int        @id @default(autoincrement()) @db.Integer
+  user_id      Int        @unique @db.Integer
+  hashed_token String     @unique
+  expires_at   DateTime
+  token_type   Int        @db.Integer
+  created_time DateTime   @default(now())
+  user         User       @relation(references: [id], fields: [user_id], onDelete: Cascade)
+  Type         Token_Type @relation(fields: [token_type], references: [id])
+}
+
+// Type models -> Regulatory models
+model Account_Status {
+  id         Int       @id @default(autoincrement()) @db.SmallInt
+  name       String    @db.VarChar(30)
+  createTime DateTime? @default(now()) @db.Date
+  updateTime DateTime? @db.Date
+  users      User[]
+}
+
+model Token_Type {
+  id               Int                @id @default(autoincrement()) @db.Integer
+  name             String             @db.VarChar(255)
+  create_time      DateTime?          @default(now()) @db.Date
+  update_time      DateTime?          @db.Date
+  ActiveTempTokens ActiveTempTokens[]
 }
