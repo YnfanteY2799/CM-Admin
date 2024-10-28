@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components";
 import "@/css/globals.css";
 
 import type { ReactNode } from "react";
@@ -12,7 +13,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<RSC>): ReactNode {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
