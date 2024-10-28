@@ -1,6 +1,7 @@
+import { ThemeProvider } from "@/components";
 import "@/css/globals.css";
 
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import type { Metadata } from "next";
 import type { IRSC } from "@/types";
 
@@ -12,7 +13,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<IRSC>): ReactNode {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Suspense fallback={<>loading...</>}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+            {children}
+          </ThemeProvider>
+        </Suspense>
+      </body>
     </html>
   );
 }
