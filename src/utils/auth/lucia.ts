@@ -8,12 +8,8 @@ const adapter = new PrismaAdapter(prisma.session, prisma.user);
 
 export const lucia = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(3, "d"),
+  getUserAttributes: ({ email }) => ({ email }),
   sessionCookie: { attributes: { secure: process.env.NODE_ENV === "production" } },
-  getUserAttributes: (attrs) => {
-    return {
-      email: attrs.email,
-    };
-  },
 });
 
 declare module "lucia" {
