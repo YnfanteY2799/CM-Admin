@@ -2,13 +2,11 @@ import { createSwaggerSpec } from "next-swagger-doc";
 
 export async function getApiDocs(): Promise<Object> {
   return createSwaggerSpec({
-    apiFolder: "app/api", // define api folder under app folder
+    apiFolder: "app/api",
     definition: {
-      openapi: "3.0.0",
+      components: { securitySchemes: { BearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" } } },
       info: { title: "Next Swagger API Example", version: "1.0" },
-      components: {
-        securitySchemes: { BearerAuth: { type: "http", scheme: "bearer", bearerFormat: "JWT" } },
-      },
+      openapi: "3.0.0",
       security: [],
     },
   });
