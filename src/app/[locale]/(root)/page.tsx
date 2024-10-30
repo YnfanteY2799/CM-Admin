@@ -1,5 +1,7 @@
-import { Button, CollidingBeams } from "@/components";
+import { Button, CollidingBeams, LinesBeams } from "@/components";
 
-export default function Home() {
-  return <CollidingBeams>XD</CollidingBeams>;
+import type { ReactNode } from "react";
+
+export default function Home(): ReactNode {
+  return <p className="text-white">XD</p>;
 }
