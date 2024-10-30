@@ -9,5 +9,5 @@ export { Button } from "./ui/Button.tsx";
 /* Buttons */
 
 /* Backgrounds */
-export { default as CollidingBeams } from "./ui/Backgrounds/Colliding.tsx";
+export { default as CollidingBeams } from "./ui/Backgrounds/Colliding/index.tsx";
 /* Backgrounds */
