@@ -6,3 +6,8 @@ import type { VariantProps } from "class-variance-authority";
 export interface RSC {
   children: ReactNode;
 }
+
+export interface ICollidingBeamsProps {
+  children: React.ReactNode;
+  className?: string;
+}
