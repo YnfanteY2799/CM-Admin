@@ -1,7 +1,7 @@
 "use client";
 import { type ReactNode, type HTMLProps, forwardRef, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/utils";
+import { cn } from "@/utils/client";
 
 import type { ICollisionMechanismProps, TCollision } from "@/types";
 

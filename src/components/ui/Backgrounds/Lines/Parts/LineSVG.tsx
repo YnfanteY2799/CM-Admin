@@ -1,4 +1,4 @@
-import { LinePaths, LineColors, LinePathVariants } from "@/utils";
+import { LinePaths, LineColors, LinePathVariants } from "@/utils/client";
 import { motion } from "framer-motion";
 
 import type { ILineSVGProps } from "@/types";

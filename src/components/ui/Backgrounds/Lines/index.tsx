@@ -1,6 +1,6 @@
 "use client";
 import LineSVG from "./Parts/LineSVG";
-import { cn } from "@/utils";
+import { cn } from "@/utils/client";
 
 import type { IBackgroundLinesProps } from "@/types";
 import type { ReactNode } from "react";

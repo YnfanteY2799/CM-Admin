@@ -8,6 +8,6 @@ export async function verifyPasswordHash(hash: string, password: string): Promis
   return await verify(hash, password);
 }
 
-export function verifyPasswordStrength(password: string): boolean {
+export async function verifyPasswordStrength(password: string): Promise<boolean> {
   return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/.test(password);
 }

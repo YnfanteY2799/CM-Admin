@@ -30,6 +30,7 @@
     "prisma": "^5.21.1",
     "react": "^18",
     "react-dom": "^18",
+    "simplex-noise": "^4.0.3",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },
