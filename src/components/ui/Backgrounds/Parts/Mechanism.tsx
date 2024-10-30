@@ -41,7 +41,7 @@ function Explosion({ ...props }: HTMLProps<HTMLDivElement>): ReactNode {
 }
 
 export const CollisionMechanism = forwardRef<HTMLDivElement, ICollisionMechanismProps>(
-  ({ parentRef, containerRef, beamOptions = {} }) => {
+  ({ parentRef, containerRef, beamOptions = {} }, _ref) => {
     // State
     const [collision, setCollision] = useState<TCollision>({ detected: false, coordinates: null });
     const [cycleCollisionDetected, setCycleCollisionDetected] = useState<boolean>(false);

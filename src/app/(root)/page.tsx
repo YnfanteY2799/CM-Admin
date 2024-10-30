@@ -1,9 +1,5 @@
-import { Button } from "@/components";
+import { Button, CollidingBeams } from "@/components";
 
 export default function Home() {
-  return (
-    <div className="p-4">
-      <Button size="sm">Something</Button>
-    </div>
-  );
+  return <CollidingBeams>XD</CollidingBeams>;
 }

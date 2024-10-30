@@ -6,6 +6,7 @@ import { cn, collidingBeams } from "@/utils";
 import type { ICollidingBeamsProps } from "@/types";
 
 export default function BackgroundBeamsWithCollision({ children, className }: ICollidingBeamsProps): ReactNode {
+  // Ref's
   const containerRef = useRef<HTMLDivElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
 
