@@ -31,3 +31,15 @@ export type TCollision = {
   detected: boolean;
   coordinates: { x: number; y: number } | null;
 };
+
+export interface ILineSVGProps {
+  svgOptions?: {
+    duration?: number;
+  };
+}
+
+export interface IBackgroundLinesProps {
+  className?: string;
+  children: ReactNode;
+  svgOptions?: { duration?: number };
+}

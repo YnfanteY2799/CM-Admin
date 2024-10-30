@@ -1,11 +1,10 @@
-const SVG = ({
-  svgOptions,
-}: {
-  svgOptions?: {
-    duration?: number;
-  };
-}) => {
+import { LinePaths, LineColors, LinePathVariants } from "@/utils";
+import { motion } from "framer-motion";
 
+import type { ILineSVGProps } from "@/types";
+import type { ReactNode } from "react";
+
+export default function LineSVG({ svgOptions }: ILineSVGProps): ReactNode {
   return (
     <motion.svg
       viewBox="0 0 1440 900"
@@ -16,13 +15,13 @@ const SVG = ({
       transition={{ duration: 1 }}
       className="absolute inset-0 w-full h-full"
     >
-      {paths.map((path, idx) => (
+      {LinePaths.map((path, idx) => (
         <motion.path
           d={path}
-          stroke={colors[idx]}
+          stroke={LineColors[idx]}
           strokeWidth="2.3"
           strokeLinecap="round"
-          variants={pathVariants}
+          variants={LinePathVariants}
           initial="initial"
           animate="animate"
           transition={{
@@ -38,13 +37,13 @@ const SVG = ({
       ))}
 
       {/* duplicate for more paths */}
-      {paths.map((path, idx) => (
+      {LinePaths.map((path, idx) => (
         <motion.path
           d={path}
-          stroke={colors[idx]}
+          stroke={LineColors[idx]}
           strokeWidth="2.3"
           strokeLinecap="round"
-          variants={pathVariants}
+          variants={LinePathVariants}
           initial="initial"
           animate="animate"
           transition={{
@@ -60,4 +59,4 @@ const SVG = ({
       ))}
     </motion.svg>
   );
-};
+}

@@ -98,3 +98,8 @@ export const LineColors = [
   "#6A286F",
   "#604483",
 ];
+
+export const LinePathVariants = {
+  initial: { strokeDashoffset: 800, strokeDasharray: "50 800" },
+  animate: { strokeDashoffset: 0, strokeDasharray: "20 800", opacity: [0, 1, 1, 0] },
+};

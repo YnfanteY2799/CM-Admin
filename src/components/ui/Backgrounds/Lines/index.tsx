@@ -1,33 +1,15 @@
 "use client";
+import LineSVG from "./Parts/LineSVG";
 import { cn } from "@/utils";
-import { motion } from "framer-motion";
-import React from "react";
 
-export const BackgroundLines = ({
-  children,
-  className,
-  svgOptions,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  svgOptions?: {
-    duration?: number;
-  };
-}) => {
+import type { IBackgroundLinesProps } from "@/types";
+import type { ReactNode } from "react";
+
+export default function BackgroundLines({ children, className, svgOptions }: IBackgroundLinesProps): ReactNode {
   return (
     <div className={cn("h-[20rem] md:h-screen w-full bg-white dark:bg-black", className)}>
-      <SVG svgOptions={svgOptions} />
+      <LineSVG svgOptions={svgOptions} />
       {children}
     </div>
   );
-};
-
-const pathVariants = {
-  initial: { strokeDashoffset: 800, strokeDasharray: "50 800" },
-  animate: {
-    strokeDashoffset: 0,
-    strokeDasharray: "20 800",
-    opacity: [0, 1, 1, 0],
-  },
-};
-
+}

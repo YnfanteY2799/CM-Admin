@@ -1,5 +1,5 @@
 "use client";
-import { CollisionMechanism } from "./Parts/Mechanism";
+import { CollisionMechanism } from "./Parts/Mechanism.tsx";
 import { useRef, type ReactNode } from "react";
 import { cn, collidingBeams } from "@/utils";
 
