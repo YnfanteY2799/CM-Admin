@@ -12,3 +12,4 @@ export function generateToken(): string {
 export function generateDate(ammount: number, unit: TimeSpanUnit): Date {
   return createDate(new TimeSpan(ammount, unit));
 }
+
