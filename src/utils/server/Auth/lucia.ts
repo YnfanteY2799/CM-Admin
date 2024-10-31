@@ -1,7 +1,7 @@
 "use server";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
+import { prisma } from "@/utils/server/db";
 import { Lucia, TimeSpan } from "lucia";
-import { prisma } from "@/db";
 
 import type { DatabaseUserAttributes, DatabaseSessionAttributes } from "@/types";
 

@@ -1,2 +1,2 @@
-import { prisma } from "@/db";
+import { prisma } from "@/utils/server/db";
 
