@@ -8,8 +8,9 @@ export const config = { matcher: ["/", "/(es|en)/:path*"] };
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (request.method === "GET") {
-    const response = NextResponse.next();
     const token = request.cookies.get("session")?.value ?? null;
+    const response = NextResponse.next();
+
     if (token !== null) {
       response.cookies.set("session", token, {
         secure: process.env.NODE_ENV === "production",
@@ -19,30 +20,28 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         path: "/",
       });
     }
+
     return response;
   }
 
   const originHeader = request.headers.get("Origin");
   // NOTE: You may need to use `X-Forwarded-Host` instead
   const hostHeader = request.headers.get("Host");
-  if (originHeader === null || hostHeader === null) {
-    return new NextResponse(null, {
-      status: 403,
-    });
-  }
+  if (originHeader === null || hostHeader === null) return new NextResponse(null, { status: 403 });
+
   let origin: URL;
   try {
     origin = new URL(originHeader);
   } catch {
-    return new NextResponse(null, {
-      status: 403,
-    });
+    return new NextResponse(null, { status: 403 });
   }
+
   if (origin.host !== hostHeader) {
     return new NextResponse(null, {
       status: 403,
     });
   }
+
   return NextResponse.next();
 }
 
