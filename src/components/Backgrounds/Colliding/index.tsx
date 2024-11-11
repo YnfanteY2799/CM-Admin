@@ -1,9 +1,9 @@
 "use client";
 import { CollisionMechanism } from "./Parts/Mechanism.tsx";
+import { cn, collidingBeams } from "@/utils/client";
 import { useRef, type ReactNode } from "react";
-import { cn, collidingBeams } from "@/utils/client/index.ts";
 
-import type { ICollidingBeamsProps } from "@/types";
+import type { ICollidingBeamsProps } from "@/types/client";
 
 export default function BackgroundBeamsWithCollision({ children, className }: ICollidingBeamsProps): ReactNode {
   // Ref's

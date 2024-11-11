@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 
-export const config = { matcher: ["/", "/(es|en)/:path*"] };
+const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   if (request.method === "GET") {
@@ -19,9 +19,17 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         httpOnly: true,
         path: "/",
       });
+    } else {
+      response.cookies.set("session", "XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", {
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 60 * 60 * 24 * 30,
+        sameSite: "lax",
+        httpOnly: true,
+        path: "/",
+      });
     }
 
-    return response;
+    return intlMiddleware(request);
   }
 
   const originHeader = request.headers.get("Origin");
@@ -36,13 +44,9 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     return new NextResponse(null, { status: 403 });
   }
 
-  if (origin.host !== hostHeader) {
-    return new NextResponse(null, {
-      status: 403,
-    });
-  }
+  if (origin.host !== hostHeader) return new NextResponse(null, { status: 403 });
 
   return NextResponse.next();
 }
 
-export default createMiddleware(routing);
+export const config = { matcher: ["/", "/(es|en)/:path*"] };

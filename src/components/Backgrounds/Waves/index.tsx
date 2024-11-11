@@ -1,31 +1,32 @@
 "use client";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { createNoise3D } from "simplex-noise";
+import { type NoiseFunction3D, createNoise3D } from "simplex-noise";
 import { cn } from "@/utils/client";
 
 import type { IWavyBackgroundProps } from "@/types/client";
 
-export default function WavyBackground({
-  children,
-  className,
-  containerClassName,
-  colors,
-  waveWidth,
-  backgroundFill,
-  blur = 10,
-  speed = "fast",
-  waveOpacity = 0.5,
-  ...props
-}: IWavyBackgroundProps): ReactNode {
-  const noise = createNoise3D();
-  let w: number, h: number, nt: number, i: number, x: number, ctx: any, canvas: any;
+export default function NoiseWaves(props: IWavyBackgroundProps): ReactNode {
+  const {
+    children,
+    className,
+    containerClassName,
+    colors,
+    waveWidth,
+    backgroundFill,
+    blur = 10,
+    speed,
+    waveOpacity,
+    ...extraProps
+  } = props;
+
+  const noise: NoiseFunction3D = createNoise3D();
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  let w: number, h: number, nt: number, i: number, x: number, ctx: any, canvas: any;
 
   const getSpeed = () => {
     switch (speed) {
-      case "slow":
-        return 0.001;
       case "fast":
         return 0.002;
       default:
@@ -89,16 +90,14 @@ export default function WavyBackground({
   }, []);
 
   return (
-    <div className={cn("h-screen flex flex-col items-center justify-center", containerClassName)}>
+    <div className={cn("h-screen w-full", containerClassName)}>
       <canvas
-        className="absolute inset-0 z-0"
-        ref={canvasRef}
         id="canvas"
-        style={{
-          ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
-        }}
-      ></canvas>
-      <div className={cn("relative z-10", className)} {...props}>
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+        style={{ ...(isSafari ? { filter: `blur(${blur}px)` } : {}) }}
+      />
+      <div className={cn("relative z-10", className)} {...extraProps}>
         {children}
       </div>
     </div>

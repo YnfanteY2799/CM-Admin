@@ -1,7 +1,7 @@
 import { LinePaths, LineColors, LinePathVariants } from "@/utils/client";
 import { motion } from "framer-motion";
 
-import type { ILineSVGProps } from "@/types";
+import type { ILineSVGProps } from "@/types/client";
 import type { ReactNode } from "react";
 
 export default function LineSVG({ svgOptions }: ILineSVGProps): ReactNode {

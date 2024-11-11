@@ -3,7 +3,7 @@ import { type ReactNode, type HTMLProps, forwardRef, useEffect, useRef, useState
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/utils/client";
 
-import type { ICollisionMechanismProps, TCollision } from "@/types";
+import type { ICollisionMechanismProps, TCollision } from "@/types/client";
 
 function Explosion({ ...props }: HTMLProps<HTMLDivElement>): ReactNode {
   const spans = Array.from({ length: 20 }, (_, index) => ({
