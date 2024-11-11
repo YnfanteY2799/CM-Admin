@@ -12,6 +12,7 @@
     "seed": "bun prisma/seeds/seed.ts"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.4.8",
     "@node-rs/argon2": "^2.0.0",
     "arctic": "^2.2.2",
     "class-variance-authority": "^0.7.0",

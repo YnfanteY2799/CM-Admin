@@ -43,3 +43,16 @@ export interface IBackgroundLinesProps {
   children: ReactNode;
   svgOptions?: { duration?: number };
 }
+
+export interface IWavyBackgroundProps {
+  containerClassName?: string;
+  backgroundFill?: string;
+  speed?: "slow" | "fast";
+  colors?: Array<string>;
+  waveOpacity?: number;
+  className?: string;
+  waveWidth?: number;
+  [key: string]: any;
+  children?: any;
+  blur?: number;
+}
