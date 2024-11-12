@@ -1,10 +1,11 @@
 "use client";
 import { type TLoginFS, LoginFormSchema } from "@/utils/common";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { ResizableDiv, ThemeSwitcher } from "@/components";
+import { createWebAuthnChallenge } from "@/utils/client";
 import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
-import { ResizableDiv, ThemeSwitcher } from "@/components";
 import { useTranslations } from "next-intl";
 import { serviceBasedLogin } from "@/api";
 import { KeyRound, LogIn } from "lucide-react";
@@ -38,6 +39,16 @@ export default function LoginForm(): ReactNode {
   function handleSyntheticSubmit(): void {
     const curr = formRef.current;
     if (curr) curr.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+  }
+
+  async function passKeyLogin() {
+    const credential = await navigator.credentials.get({
+      publicKey: { challenge: await createWebAuthnChallenge(), userVerification: "required" },
+    });
+
+    if (!(credential instanceof PublicKeyCredential)) throw new Error("Failed to create public key");
+    if (!(credential.response instanceof AuthenticatorAssertionResponse)) throw new Error("Unexpected error");
+    console.log({ credential });
   }
 
   // Form handle
@@ -132,7 +143,9 @@ export default function LoginForm(): ReactNode {
 
         {/* Social Login */}
         <div className="grid grid-cols-1 gap-3">
-          <Button startContent={<KeyRound size={20} />}>{commons("Form_Labels.PassKeyLogin")}</Button>
+          <Button startContent={<KeyRound size={20} />} onPress={passKeyLogin}>
+            {commons("Form_Labels.PassKeyLogin")}
+          </Button>
         </div>
       </div>
     </div>
