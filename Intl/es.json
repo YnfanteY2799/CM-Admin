@@ -1,8 +1,10 @@
 {
+     "Lang": "English",
      "Common": {
           "Form_Labels": {
                "email": "Correo Electrónico",
-               "password": "Contraseña"
+               "password": "Contraseña",
+               "login": "Iniciar Sesion"
           },
           "Errors": {
                "emerror": "Porfavor provea un Correo Electrónico valido!",

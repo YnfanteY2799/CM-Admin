@@ -1,8 +1,10 @@
 {
+     "Lang": "Español",
      "Common": {
           "Form_Labels": {
                "email": "Email",
-               "password": "Password"
+               "password": "Password",
+               "login": "Login"
           },
           "Errors": {
                "emerror": "The provided email is not valid!",
