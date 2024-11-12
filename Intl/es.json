@@ -4,6 +4,9 @@
                "email": "",
                "password": ""
           },
-          "Errors": {}
+          "Errors": {
+               "emerror": "",
+               "pwerror": ""
+          }
      }
 }
