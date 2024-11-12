@@ -3,6 +3,7 @@
           "Form_Labels": {
                "email": "",
                "password": ""
-          }
+          },
+          "Errors": {}
      }
 }
