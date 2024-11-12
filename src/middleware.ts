@@ -7,7 +7,6 @@ import type { NextRequest } from "next/server";
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
-  console.log({ XD: "XD" });
   if (request.method === "GET") {
     const token = request.cookies.get("session")?.value ?? null;
     const response = intlMiddleware(request);

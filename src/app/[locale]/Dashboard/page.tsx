@@ -1,4 +1,3 @@
-import { NoiseWaves } from "@/components";
 import { type ReactNode } from "react";
 
 export default function ComponentName(): ReactNode {
