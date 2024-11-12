@@ -1,7 +1,5 @@
 /* Providers */
-
-export { default as ThemeProvider } from "./providers/Theme.tsx";
-
+export { default as ThemeProvider } from "./Providers/Theme.tsx";
 /* Providers */
 
 /* Backgrounds */

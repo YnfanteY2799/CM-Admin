@@ -1,5 +1,5 @@
+import { routing, locales } from "./i18n/routing.ts";
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing.ts";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
@@ -7,9 +7,15 @@ import type { NextRequest } from "next/server";
 const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
+  console.log({ XD: "XD" });
   if (request.method === "GET") {
     const token = request.cookies.get("session")?.value ?? null;
-    const response = NextResponse.next();
+    const response = intlMiddleware(request);
+    const { pathname } = request.nextUrl;
+
+    // URI comprobation
+    const shouldHandle = pathname === "/" || new RegExp(`^/(${locales.join("|")})(/.*)?$`).test(pathname);
+    console.log({ shouldHandle });
 
     if (token !== null) {
       response.cookies.set("session", token, {
@@ -20,16 +26,10 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
         path: "/",
       });
     } else {
-      response.cookies.set("session", "XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", {
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 30,
-        sameSite: "lax",
-        httpOnly: true,
-        path: "/",
-      });
+      // return NextResponse.redirect(new URL("/signIn", request.url));
     }
 
-    return intlMiddleware(request);
+    return response;
   }
 
   const originHeader = request.headers.get("Origin");
