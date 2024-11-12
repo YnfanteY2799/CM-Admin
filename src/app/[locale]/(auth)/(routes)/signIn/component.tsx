@@ -1,3 +1,4 @@
+"use client";
 import { Button, Card, CardBody, CardFooter, CardHeader, Input } from "@nextui-org/react";
 import { type TLoginFS, LoginFormSchema } from "@/utils/common";
 import { type SubmitHandler, useForm } from "react-hook-form";
