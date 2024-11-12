@@ -5,6 +5,7 @@ import { signInAction } from "./action.ts";
 import { NoiseWaves } from "@/components";
 
 export default function signInPage(): ReactNode {
+  // State
   const [state, action] = useActionState(signInAction, { message: "" });
 
   return (
@@ -13,10 +14,18 @@ export default function signInPage(): ReactNode {
         <Card className="px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md" radius="lg" shadow="md">
           <CardHeader className="justify-between">
             <div></div>
-            <div className="">dx</div>
-            <div className="">xd</div>
+            <p className="">
+              dx
+            </p>
+            <div className="flex gap-4">
+              xd
+            </div>
           </CardHeader>
-          <CardBody className="justify-center gap-4"></CardBody>
+          <CardBody className="justify-center gap-4">
+          <ResizableDiv>
+
+          </ResizableDiv>
+          </CardBody>
           <CardFooter className="justify-center">
             <Button className="w-full"></Button>
           </CardFooter>

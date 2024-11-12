@@ -7,8 +7,13 @@ export interface RSC {
 }
 
 export interface ICollidingBeamsProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
+}
+
+export interface IBaseComponent {
+  className?: string;
+  children?: ReactNode;
 }
 
 export interface ICollisionMechanismProps {
@@ -33,9 +38,7 @@ export type TCollision = {
 };
 
 export interface ILineSVGProps {
-  svgOptions?: {
-    duration?: number;
-  };
+  svgOptions?: { duration?: number };
 }
 
 export interface IBackgroundLinesProps {
