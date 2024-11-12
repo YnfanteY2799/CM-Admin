@@ -1,12 +1,15 @@
 {
      "Common": {
           "Form_Labels": {
-               "email": "",
-               "password": ""
+               "email": "Correo Electrónico",
+               "password": "Contraseña"
           },
           "Errors": {
-               "emerror": "",
-               "pwerror": ""
+               "emerror": "Porfavor provea un Correo Electrónico valido!",
+               "pwerror": "La contraseña provista no es valida"
+          },
+          "Status": {
+               "loading": "Cargando"
           }
      }
 }

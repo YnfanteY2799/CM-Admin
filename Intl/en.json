@@ -1,12 +1,15 @@
 {
      "Common": {
           "Form_Labels": {
-               "email": "",
-               "password": ""
+               "email": "Email",
+               "password": "Password"
           },
           "Errors": {
-               "emerror": "",
-               "pwerror": ""
+               "emerror": "The provided email is not valid!",
+               "pwerror": "The provided password is not valid!"
+          },
+          "Status": {
+               "loading": "Loading"
           }
      }
 }
