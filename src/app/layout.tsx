@@ -1,5 +1,7 @@
 import { ThemeProvider } from "@/components";
+import { Satoshi } from "@/fonts";
 import "@/css/globals.css";
+import clsx from "clsx";
 
 import type { Metadata, Viewport } from "next";
 import type { RSC } from "@/types/client";
@@ -20,7 +22,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<RSC>): ReactNode {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={clsx(Satoshi.className, "antialiased")}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
