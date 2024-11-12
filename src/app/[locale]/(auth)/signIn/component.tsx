@@ -56,65 +56,6 @@ export default function LoginForm(): ReactNode {
     setIsLoading(false);
   };
 
-  // return (
-  //   <Card
-  //     className="px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-md w-full max-w-md text-large border-none"
-  //     radius="lg"
-  //     shadow="md"
-  //   >
-  //     <CardHeader className="justify-between">
-  //       <div></div>
-  //       <p className="">dx</p>
-  //       <div className="flex gap-4">xd</div>
-  //     </CardHeader>
-  //     <ResizableDiv>
-  //       <CardBody className="justify-center gap-4">
-  //         <form ref={formRef} onSubmit={handleLoginSubmit(onLoginSubmit)} className="flex flex-col gap-[8px]">
-  //           <Input
-  //             size="lg"
-  //             radius="md"
-  //             type="email"
-  //             maxLength={100}
-  //             variant="bordered"
-  //             isReadOnly={isLoading}
-  //             labelPlacement="outside"
-  //             isInvalid={!!loginEmail}
-  //             {...loginRegister("email")}
-  //             label={commons("Form_Labels.email")}
-  //             errorMessage={loginEmail && commons(`Errors.${loginEmail.message}`)}
-  //           />
-  //           <Input
-  //             size="lg"
-  //             radius="md"
-  //             type="email"
-  //             maxLength={100}
-  //             variant="bordered"
-  //             isInvalid={!!password}
-  //             isReadOnly={isLoading}
-  //             labelPlacement="outside"
-  //             {...loginRegister("email")}
-  //             label={commons("Form_Labels.password")}
-  //             errorMessage={password && commons(`Errors.${password.message}`)}
-  //           />
-  //         </form>
-  //       </CardBody>
-  //     </ResizableDiv>
-  //     <CardFooter className="justify-center">
-  //       <Button
-  //         size="md"
-  //         type="submit"
-  //         color="primary"
-  //         className="w-full"
-  //         isLoading={isLoading}
-  //         isDisabled={isLoading}
-  //         onPress={handleSyntheticSubmit}
-  //       >
-  //         {commons("Form_Labels.login")}
-  //       </Button>
-  //     </CardFooter>
-  //   </Card>
-  // );
-
   return (
     <div className="w-full max-w-md p-6 relative">
       <div className="bg-zinc-900/90 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-zinc-800">

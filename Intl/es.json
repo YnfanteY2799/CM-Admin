@@ -2,13 +2,19 @@
      "Lang": "English",
      "Common": {
           "Form_Labels": {
+               "PassKeyLogin": "Iniciar Sesion con una llave de acceso",
                "email": "Correo Electrónico",
+               "login": "Iniciar Sesion",
                "password": "Contraseña",
-               "login": "Iniciar Sesion"
+               "Or": "O"
           },
           "Errors": {
                "emerror": "Porfavor provea un Correo Electrónico valido!",
                "pwerror": "La contraseña provista no es valida"
+          },
+          "Login": {
+               "WelcomeBack": "Bienvenido",
+               "AlterLogin": " ¿ No tienes una cuenta aun ?"
           },
           "Status": {
                "loading": "Cargando"
