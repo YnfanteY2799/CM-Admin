@@ -1,11 +1,14 @@
 "use client";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { type NoiseFunction3D, createNoise3D } from "simplex-noise";
-import { cn } from "@/utils/client";
+import { cn, generateRandomColors } from "@/utils/client";
+import { useTheme } from "next-themes";
 
 import type { IWavyBackgroundProps } from "@/types/client";
 
 export default function NoiseWaves(props: IWavyBackgroundProps): ReactNode {
+  const { theme } = useTheme();
+
   const {
     children,
     className,
@@ -20,6 +23,8 @@ export default function NoiseWaves(props: IWavyBackgroundProps): ReactNode {
   } = props;
 
   const noise: NoiseFunction3D = createNoise3D();
+
+  const isDark = theme !== "light";
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -49,7 +54,8 @@ export default function NoiseWaves(props: IWavyBackgroundProps): ReactNode {
     render();
   };
 
-  const waveColors = colors ?? ["#38bdf8", "#818cf8", "#c084fc", "#e879f9", "#22d3ee"];
+  // const waveColors = colors ?? ["#38bdf8", "#818cf8", "#c084fc", "#e879f9", "#22d3ee"];
+  const waveColors = generateRandomColors();
   const drawWave = (n: number) => {
     nt += getSpeed();
     for (i = 0; i < n; i++) {
@@ -67,7 +73,8 @@ export default function NoiseWaves(props: IWavyBackgroundProps): ReactNode {
 
   let animationId: number;
   const render = () => {
-    ctx.fillStyle = backgroundFill || "black";
+    // ctx.fillStyle = backgroundFill || "black";
+    ctx.fillStyle = !isDark ? "white" : "black";
     ctx.globalAlpha = waveOpacity || 0.5;
     ctx.fillRect(0, 0, w, h);
     drawWave(5);
@@ -76,18 +83,19 @@ export default function NoiseWaves(props: IWavyBackgroundProps): ReactNode {
 
   useEffect(() => {
     init();
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
-  }, []);
+    return () => cancelAnimationFrame(animationId);
+  }, [isDark]);
 
   const [isSafari, setIsSafari] = useState(false);
+
   useEffect(() => {
     // I'm sorry but i have got to support it on safari.
     setIsSafari(
       typeof window !== "undefined" && navigator.userAgent.includes("Safari") && !navigator.userAgent.includes("Chrome")
     );
   }, []);
+
+
 
   return (
     <div className={cn("h-screen w-full", containerClassName)}>

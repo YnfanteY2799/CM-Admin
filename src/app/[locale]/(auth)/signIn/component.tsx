@@ -4,7 +4,7 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
-import { ResizableDiv } from "@/components";
+import { ResizableDiv, ThemeSwitcher } from "@/components";
 import { useTranslations } from "next-intl";
 import { serviceBasedLogin } from "@/api";
 import { KeyRound, LogIn } from "lucide-react";
@@ -58,16 +58,17 @@ export default function LoginForm(): ReactNode {
 
   return (
     <div className="w-full max-w-md p-6 relative">
-      <div className="bg-zinc-900/90 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-zinc-800">
+      <div className="bg-background/90 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-zinc-800">
         {/* Logo */}
 
         <div className="flex justify-between">
           <div></div>
           <p></p>
+          <ThemeSwitcher />
         </div>
 
         {/* Header */}
-        <h1 className="text-2xl font-bold text-white text-center mb-2">{commons("Login.WelcomeBack")}</h1>
+        <h1 className="text-2xl font-bold text-center mb-2">{commons("Login.WelcomeBack")}</h1>
         <p className="text-zinc-400 text-center text-sm mb-6">
           {commons("Login.AlterLogin")}
           {/* <Link href="/signup" className="text-blue-500 hover:text-blue-400">
@@ -125,7 +126,7 @@ export default function LoginForm(): ReactNode {
             <div className="w-full border-t border-default" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-default px-2 rounded">{commons("Form_Labels.Or")}</span>
+            <span className="bg-default/5 px-2 rounded">{commons("Form_Labels.Or")}</span>
           </div>
         </div>
 

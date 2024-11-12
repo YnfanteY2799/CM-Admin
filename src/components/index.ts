@@ -8,3 +8,8 @@ export { default as CollidingBeams } from "./Backgrounds/Colliding/index.tsx";
 export { default as LinesBeams } from "./Backgrounds/Lines/index.tsx";
 export { default as NoiseWaves } from "./Backgrounds/Waves/index.tsx";
 /* Backgrounds */
+
+/* Buttons */
+export { default as ThemeSwitcher } from "./Buttons/ThemeSwitcher.tsx";
+
+/* Buttons */
