@@ -47,14 +47,13 @@ export default function LoginForm(): ReactNode {
       const credential = await navigator.credentials.get({
         publicKey: { challenge: await createWebAuthnChallenge(), userVerification: "required" },
       });
-
       if (!(credential instanceof PublicKeyCredential)) throw new Error("Failed to create public key");
       if (!(credential.response instanceof AuthenticatorAssertionResponse)) throw new Error("Unexpected error");
       const response = await passKeyBasedLogin({
-        credential_id: encodeBase64(new Uint8Array(credential.rawId)),
+        id: encodeBase64(new Uint8Array(credential.rawId)),
+        json: encodeBase64(new Uint8Array(credential.response.clientDataJSON)),
         signature: encodeBase64(new Uint8Array(credential.response.signature)),
-        client_data_json: encodeBase64(new Uint8Array(credential.response.clientDataJSON)),
-        authenticator_data: encodeBase64(new Uint8Array(credential.response.authenticatorData)),
+        data: encodeBase64(new Uint8Array(credential.response.authenticatorData)),
       });
     } catch (e) {
       console.log(e);
@@ -85,7 +84,9 @@ export default function LoginForm(): ReactNode {
         <div className="flex justify-between">
           <div></div>
           <p></p>
-          <ThemeSwitcher />
+          <div className="flex justify-between gap-6">
+            <ThemeSwitcher />
+          </div>
         </div>
 
         {/* Header */}

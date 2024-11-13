@@ -6,7 +6,9 @@ import { cookies } from "next/headers";
 import type { PassKeyCredentialsObj } from "@/types/common";
 import type { TLoginFS } from "@/utils/common";
 
-export async function serviceBasedLogin(data: TLoginFS): Promise<Omit<any, "JWT">> {
+export async function serviceBasedLogin({ email, password }: TLoginFS): Promise<Omit<any, "JWT">> {
+  if (!globalPOSTRateLimit()) return { response: "not logged" };
+
   return { response: "logged" };
 }
 

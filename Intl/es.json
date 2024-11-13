@@ -17,7 +17,9 @@
                "AlterLogin": " ¿ No tienes una cuenta aun ?"
           },
           "Status": {
-               "loading": "Cargando"
+               "loading": "Cargando",
+               "success_action": "Accion Éxitosa",
+               "welcome": "Bienvenido otra vez, {username} !"
           }
      }
 }

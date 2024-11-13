@@ -15,7 +15,7 @@ export default function ThemeSwitcher(): ReactNode {
   const toggleTheme = () => setTheme((old) => (old === "light" ? "dark" : "light"));
 
   return (
-    <button onClick={toggleTheme} className={"rounded-full flex items-center justify-center transition-colors duration-300"}>
+    <button onClick={toggleTheme} className="rounded-full flex items-center justify-center transition-colors duration-300">
       <motion.div animate={{ rotate: isDark ? 0 : 360 }} transition={{ duration: 0.5, ease: "easeInOut" }}>
         {isDark ? <Moon className="text-primary" /> : <Sun className="text-primary" />}
       </motion.div>

@@ -11,7 +11,7 @@ export default function ThemeProvider({ children }: RSC): ReactNode {
     <NextUIProvider>
       <NextThemesProvider attribute="class" defaultTheme="dark">
         {children}
-        <Toaster richColors />
+        <Toaster richColors closeButton position="bottom-right" className="backdrop-blur-lg"/>
       </NextThemesProvider>
     </NextUIProvider>
   );

@@ -17,7 +17,8 @@
                "AlterLogin": "Don't you have an Account yet ?"
           },
           "Status": {
-               "loading": "Loading"
+               "loading": "Loading",
+               "welcome": "Welcome Back {username} !"
           }
      }
 }
