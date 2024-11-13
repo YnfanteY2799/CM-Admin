@@ -9,18 +9,22 @@ datasource db {
 
 // User related Models <Sesion | Provided | AppUser>
 model User {
-  id             Int                @id @default(autoincrement()) @db.Integer
-  email          String             @unique @db.VarChar(255)
-  verified_email Boolean?           @default(false) @db.Boolean
-  password       String             @db.VarChar(255)
-  password_salt  String             @db.VarChar(255)
-  status_id      Int                @default(1) @db.SmallInt
-  status_Id      Int?               @db.SmallInt
-  create_time    DateTime?          @default(now()) @db.Date
-  update_time    DateTime?          @db.Date
-  Account_Status Account_Status?    @relation(fields: [status_Id], references: [id])
-  Active_Tokens  ActiveTempTokens[]
-  Session        Session[]
+  id              Int                @id @default(autoincrement()) @db.Integer
+  email           String             @unique @db.VarChar(255)
+
+
+
+  
+  verified_email  Boolean            @default(false) @db.Boolean
+  hashed_password String             @db.VarChar(255)
+  status_id       Int                @default(1) @db.SmallInt
+
+
+  create_time     DateTime?          @default(now()) @db.Date
+  update_time     DateTime?          @db.Date
+  Account_Status  Account_Status?    @relation(fields: [status_id], references: [id])
+  Active_Tokens   ActiveTempTokens[]
+  Session         Session[]
 }
 
 model Session {
