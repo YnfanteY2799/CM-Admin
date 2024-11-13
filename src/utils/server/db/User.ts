@@ -7,7 +7,7 @@ export async function getUserByEmail(email?: string): Promise<any> {
       select: { email: true, hashed_password: true, Account_Status: { select: { name: true } } },
     });
     console.log({ user });
-    if (!user) throw Error("User does not exists");
+    if (!user) return { message: "User does not exists" };
     return user;
   } catch (e) {
     console.log({ e });

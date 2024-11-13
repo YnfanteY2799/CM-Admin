@@ -60,17 +60,12 @@ export class Throttler<_Key> {
     let counter = this.storage.get(key) ?? null;
     const now = Date.now();
     if (counter === null) {
-      counter = {
-        timeout: 0,
-        updatedAt: now,
-      };
+      counter = { timeout: 0, updatedAt: now };
       this.storage.set(key, counter);
       return true;
     }
     const allowed = now - counter.updatedAt >= this.timeoutSeconds[counter.timeout] * 1000;
-    if (!allowed) {
-      return false;
-    }
+    if (!allowed) return false;
     counter.updatedAt = now;
     counter.timeout = Math.min(counter.timeout + 1, this.timeoutSeconds.length - 1);
     this.storage.set(key, counter);
@@ -83,25 +78,21 @@ export class Throttler<_Key> {
 }
 
 export class ExpiringTokenBucket<_Key> {
-  public max: number;
   public expiresInSeconds: number;
+  public max: number;
 
   private storage = new Map<_Key, ExpiringBucket>();
 
   constructor(max: number, expiresInSeconds: number) {
-    this.max = max;
     this.expiresInSeconds = expiresInSeconds;
+    this.max = max;
   }
 
   public check(key: _Key, cost: number): boolean {
     const bucket = this.storage.get(key) ?? null;
     const now = Date.now();
-    if (bucket === null) {
-      return true;
-    }
-    if (now - bucket.createdAt >= this.expiresInSeconds * 1000) {
-      return true;
-    }
+    if (bucket === null) return true;
+    if (now - bucket.createdAt >= this.expiresInSeconds * 1000) return true;
     return bucket.count >= cost;
   }
 
@@ -109,19 +100,13 @@ export class ExpiringTokenBucket<_Key> {
     let bucket = this.storage.get(key) ?? null;
     const now = Date.now();
     if (bucket === null) {
-      bucket = {
-        count: this.max - cost,
-        createdAt: now,
-      };
+      bucket = { count: this.max - cost, createdAt: now };
       this.storage.set(key, bucket);
       return true;
     }
-    if (now - bucket.createdAt >= this.expiresInSeconds * 1000) {
-      bucket.count = this.max;
-    }
-    if (bucket.count < cost) {
-      return false;
-    }
+    if (now - bucket.createdAt >= this.expiresInSeconds * 1000) bucket.count = this.max;
+    if (bucket.count < cost) return false;
+
     bucket.count -= cost;
     this.storage.set(key, bucket);
     return true;
