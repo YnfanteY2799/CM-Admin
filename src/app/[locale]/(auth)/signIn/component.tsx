@@ -7,9 +7,10 @@ import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import { serviceBasedLogin } from "@/api";
+import { passKeyBasedLogin, serviceBasedLogin } from "@/api";
 import { KeyRound, LogIn } from "lucide-react";
 import { toast } from "sonner";
+import { encodeBase64 } from "@oslojs/encoding";
 
 export default function LoginForm(): ReactNode {
   // Hooks
@@ -42,13 +43,22 @@ export default function LoginForm(): ReactNode {
   }
 
   async function passKeyLogin() {
-    const credential = await navigator.credentials.get({
-      publicKey: { challenge: await createWebAuthnChallenge(), userVerification: "required" },
-    });
+    try {
+      const credential = await navigator.credentials.get({
+        publicKey: { challenge: await createWebAuthnChallenge(), userVerification: "required" },
+      });
 
-    if (!(credential instanceof PublicKeyCredential)) throw new Error("Failed to create public key");
-    if (!(credential.response instanceof AuthenticatorAssertionResponse)) throw new Error("Unexpected error");
-    console.log({ credential });
+      if (!(credential instanceof PublicKeyCredential)) throw new Error("Failed to create public key");
+      if (!(credential.response instanceof AuthenticatorAssertionResponse)) throw new Error("Unexpected error");
+      const response = await passKeyBasedLogin({
+        credential_id: encodeBase64(new Uint8Array(credential.rawId)),
+        signature: encodeBase64(new Uint8Array(credential.response.signature)),
+        client_data_json: encodeBase64(new Uint8Array(credential.response.clientDataJSON)),
+        authenticator_data: encodeBase64(new Uint8Array(credential.response.authenticatorData)),
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // Form handle
@@ -69,7 +79,7 @@ export default function LoginForm(): ReactNode {
 
   return (
     <div className="w-full max-w-md p-6 relative">
-      <div className="bg-background/90 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-zinc-800">
+      <div className="bg-background/90 light:bg-background/10 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-zinc-800">
         {/* Logo */}
 
         <div className="flex justify-between">
