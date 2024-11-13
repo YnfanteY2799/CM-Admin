@@ -1,16 +1,16 @@
 "use client";
 import { type TLoginFS, LoginFormSchema } from "@/utils/common";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { passKeyBasedLogin, serviceBasedLogin } from "@/api";
 import { ResizableDiv, ThemeSwitcher } from "@/components";
 import { createWebAuthnChallenge } from "@/utils/client";
 import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
-import { useTranslations } from "next-intl";
-import { passKeyBasedLogin, serviceBasedLogin } from "@/api";
-import { KeyRound, LogIn } from "lucide-react";
-import { toast } from "sonner";
 import { encodeBase64 } from "@oslojs/encoding";
+import { KeyRound, LogIn } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 export default function LoginForm(): ReactNode {
   // Hooks
