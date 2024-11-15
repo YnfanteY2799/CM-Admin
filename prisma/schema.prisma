@@ -9,17 +9,19 @@ datasource db {
 
 // User related Models <Sesion | Provided | AppUser>
 model User {
-  id              Int                @id @default(autoincrement()) @db.Integer
-  username        String             @db.VarChar(255)
-  email           String             @unique @db.VarChar(255)
-  verified_email  Boolean            @default(false) @db.Boolean
-  hashed_password String             @db.VarChar(255)
-  status_id       Int                @default(1) @db.SmallInt
-  create_time     DateTime?          @default(now()) @db.Date
-  update_time     DateTime?          @db.Date
-  Account_Status  Account_Status?    @relation(fields: [status_id], references: [id])
-  Active_Tokens   ActiveTempTokens[]
-  Session         Session[]
+  id                 Int                  @id @default(autoincrement()) @db.Integer
+  username           String               @db.VarChar(255)
+  email              String               @unique @db.VarChar(255)
+  verified_email     Boolean              @default(false) @db.Boolean
+  hashed_password    String               @db.VarChar(255)
+  status_id          Int                  @default(1) @db.SmallInt
+  create_time        DateTime?            @default(now()) @db.Date
+  update_time        DateTime?            @db.Date
+  Account_Status     Account_Status?      @relation(fields: [status_id], references: [id])
+  Active_Tokens      ActiveTempTokens[]
+  Session            Session[]
+  TOTPCredentials    TOTPCredentials?
+  PassKeyCredentials PassKeyCredentials[]
 }
 
 model Session {
@@ -35,12 +37,32 @@ model Session {
 model ActiveTempTokens {
   id           Int        @id @default(autoincrement()) @db.Integer
   user_id      Int        @unique @db.Integer
-  hashed_token String     @unique
+  hashed_token String     @unique @db.VarChar(255)
   expires_at   DateTime
   token_type   Int        @db.Integer
   created_time DateTime   @default(now())
   user         User       @relation(references: [id], fields: [user_id], onDelete: Cascade)
   Type         Token_Type @relation(fields: [token_type], references: [id])
+}
+
+model TOTPCredentials {
+  id           Int       @id @default(autoincrement()) @db.Integer
+  user_id      Int       @unique @db.Integer
+  key          Bytes     @db.ByteA
+  created_time DateTime  @default(now())
+  update_time  DateTime? @db.Date
+  user         User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
+}
+
+model PassKeyCredentials {
+  id           String    @id @db.VarChar(255)
+  user_id      Int       @db.Integer
+  key_name     String    @db.VarChar(255)
+  algorithm    Int       @db.Integer
+  public_key   Bytes     @db.ByteA
+  created_time DateTime  @default(now())
+  update_time  DateTime? @db.Date
+  user         User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
 }
 
 // Type models -> Regulatory models
