@@ -53,13 +53,14 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
           email: true,
           username: true,
           verified_email: true,
-          TOTPCredentials: { select: {} },
-          PassKeyCredentials: { select: {} },
-          SecurityKeysCredentials: { select: {} },
+          TOTPCredentials: { select: { id: true } },
+          PassKeyCredentials: { select: { id: true }, take: 1 },
+          SecurityKeysCredentials: { select: { id: true }, take: 1 },
         },
       },
     },
   });
+
   if (!dbSession) return { session: null, user: null };
 
   const session: ISession = {
@@ -76,8 +77,8 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
     username: dbSession.user.username,
     verified_email: dbSession.user.verified_email,
     registeredTOTP: !!dbSession.user.TOTPCredentials,
-    registeredPasskey: !!dbSession.user.PassKeyCredentials,
-    registeredSecurityKey: !!dbSession.user.PassKeyCredentials,
+    registeredPasskey: dbSession.user.PassKeyCredentials.length > 0,
+    registeredSecurityKey: dbSession.user.PassKeyCredentials.length > 0,
   };
   if (user.registeredPasskey || user.registeredSecurityKey || user.registeredTOTP) user.registered2FA = true;
 

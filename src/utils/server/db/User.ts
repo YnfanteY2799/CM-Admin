@@ -16,7 +16,7 @@ export async function getUserByEmail(email?: string): Promise<TConsumableAction<
       },
     });
     if (!user) return { message: "User does not exists" };
-    return user;
+    return { data: user };
   } catch (e) {
     console.log({ e });
     return { message: "Error" };

@@ -25,9 +25,9 @@ export async function serviceBasedLogin({ email, password }: TLoginFS): Promise<
   const clientIP = (await headers()).get("X-Forwarded-For");
   if (clientIP !== null && !ipBucket.check(clientIP, 1)) return { message: "Too many requests" };
 
-  const user = await getUserByEmail(email);
-  if (user.id) return { message: "user not exists" };
-  if (!throttler.consume(user.id)) return { message: "Too many requests" };
+  const { data, message } = await getUserByEmail(email);
+  if (data === undefined) return { message };
+  if (!throttler.consume(data.id)) return { message: "Too many requests" };
 
   return { response: "logged" };
 }
