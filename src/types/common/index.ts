@@ -11,11 +11,11 @@ export type TConsumableAction<G> = { message: string } | G;
 
 export interface ISessionUser extends Omit<User, "create_time" | "update_time" | "status_id"> {}
 
-export interface SessionFlags {
+export interface ISessionFlags {
   twoFactorVerified: boolean;
 }
 
-export interface ISession extends SessionFlags {
+export interface ISession extends ISessionFlags {
   id: string;
   user_id: number;
   expires_at: Date;

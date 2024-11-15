@@ -4,12 +4,33 @@ import { cookies } from "next/headers";
 import { prisma } from "@/db";
 import { cache } from "react";
 
-import type { SessionValidationResult, ISession, ISessionUser } from "@/types/common";
+import type { SessionValidationResult, ISession, ISessionUser, ISessionFlags } from "@/types/common";
 
 export function generateSessionToken(): string {
   const tokenBytes = new Uint8Array(20);
   crypto.getRandomValues(tokenBytes);
   return encodeBase32LowerCaseNoPadding(tokenBytes);
+}
+
+export async function createSession(token: string, user_id: number, flags: ISessionFlags): Promise<ISession> {
+  const id = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+  const session: ISession = {
+    id,
+    user_id,
+    twoFactorVerified: flags.twoFactorVerified,
+    expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+  };
+
+  await prisma.session.create({
+    data: {
+      id,
+      user_id,
+      two_factor_verified: flags.twoFactorVerified,
+      expires_at: Math.floor(session.expires_at.getTime() / 1000).toString(),
+    },
+  });
+
+  return session;
 }
 
 export async function validateSessionToken(id: string): Promise<SessionValidationResult> {
@@ -51,8 +72,12 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
   return { session, user };
 }
 
-export async function invalidateSession(sessionId: string): Promise<void> {
-  await prisma.session.delete({ where: { id: sessionId } });
+export async function invalidateSession(id: string): Promise<void> {
+  await prisma.session.delete({ where: { id } });
+}
+
+export async function setSessionAs2FAVerified(id: string): Promise<void> {
+  await prisma.session.update({ where: { id }, data: { two_factor_verified: true } });
 }
 
 export async function invalidateUserSessions(user_id: number): Promise<void> {
