@@ -1,8 +1,8 @@
 /* Bulk Exports */
-export * from "./Functions.ts";
-export * from "./RateLimit.ts";
-export * from "./WebAuthn.ts";
-export * from "./Requests.ts";
+export * from "./methods/RateLimit.ts";
+export * from "./methods/WebAuthn.ts";
+export * from "./methods/Requests.ts";
+export * from "./functions.ts";
 /* Bulk Exports */
 
 /* DB Methods */
