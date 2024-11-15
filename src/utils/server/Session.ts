@@ -12,6 +12,12 @@ export function generateSessionToken(): string {
   return encodeBase32LowerCaseNoPadding(tokenBytes);
 }
 
+export const getCurrentSession = cache(async (): Promise<SessionValidationResult> => {
+  const token = (await cookies()).get("session")?.value ?? null;
+  if (!token) return { session: null, user: null };
+  return await validateSessionToken(token);
+});
+
 export async function createSession(token: string, user_id: number, flags: ISessionFlags): Promise<ISession> {
   const id = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: ISession = {
@@ -36,18 +42,14 @@ export async function createSession(token: string, user_id: number, flags: ISess
 export async function validateSessionToken(id: string): Promise<SessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(id)));
   const dbSession = await prisma.session.findFirst({
+    where: { id },
     select: {
       id: true,
       user_id: true,
       expires_at: true,
       two_factor_verified: true,
-      user: {
-        select: {
-          id: true,
-        },
-      },
+      user: { select: { email: true, username: true, verified_email: true } },
     },
-    where: { id },
   });
   if (!dbSession) return { session: null, user: null };
 
@@ -59,14 +61,14 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
   };
 
   const user: ISessionUser = {
-    id: dbSession.id,
-    email: row.string(5),
-    username: row.string(6),
-    verified_email: Boolean(row.number(7)),
-    registeredTOTP: Boolean(row.number(8)),
-    registeredPasskey: Boolean(row.number(9)),
-    registeredSecurityKey: Boolean(row.number(10)),
     registered2FA: false,
+    id: dbSession.user_id,
+    email: dbSession.user.email,
+    username: dbSession.user.username,
+    registeredTOTP: dbSession.user.,
+    registeredPasskey: dbSession.user.,
+    verified_email: dbSession.user.verified_email,
+    registeredSecurityKey: dbSession.user.,
   };
   if (user.registeredPasskey || user.registeredSecurityKey || user.registeredTOTP) user.registered2FA = true;
 
@@ -95,12 +97,6 @@ export async function setSessionAs2FAVerified(id: string): Promise<void> {
 export async function invalidateUserSessions(user_id: number): Promise<void> {
   //   await prisma.session.delete({ where: { user_id } });
 }
-
-export const getCurrentSession = cache(async (): Promise<SessionValidationResult> => {
-  const token = (await cookies()).get("session")?.value ?? null;
-  if (!token) return { session: null, user: null };
-  return await validateSessionToken(token);
-});
 
 export async function setSessionTokenCookie(token: string, expiresAt: Date): Promise<void> {
   (await cookies()).set("session", token, {

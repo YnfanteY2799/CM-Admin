@@ -5,4 +5,4 @@ export const commonStatus = [
   { name: "Deleted" },
 ];
 
-export const tokenTypes = [{ name: "verification" }, { name: "reset password" }];
+export const tokenTypes = [{ name: "verification" }, { name: "reset password" }, { name: "topt" }, { name: "passkey" }];
