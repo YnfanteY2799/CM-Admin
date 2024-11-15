@@ -2,7 +2,7 @@ import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/enco
 import { sha256 } from "@oslojs/crypto/sha2";
 import { prisma } from "@/db";
 
-import type { SessionValidationResult, ISession } from "@/types/common";
+import type { SessionValidationResult, ISession, ISessionUser } from "@/types/common";
 
 export function generateSessionToken(): string {
   const tokenBytes = new Uint8Array(20);
@@ -25,7 +25,7 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
     twoFactorVerified: dbSession.two_factor_verified,
   };
 
-  const user: User = {
+  const user: ISessionUser = {
     id: row.number(4),
     email: row.string(5),
     username: row.string(6),
@@ -43,10 +43,12 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
   }
   if (Date.now() >= session.expires_at.getTime() - 1000 * 60 * 60 * 24 * 15) {
     session.expires_at = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
-    db.execute("UPDATE session SET expires_at = ? WHERE session.id = ?", [
-      Math.floor(session.expiresAt.getTime() / 1000),
-      sessionId,
-    ]);
+    await prisma.session.update({
+      data: { expires_at: new Date() },
+      where: { id: sessionId },
+    });
+
+    //     Math.floor(session.expires_at.getTime() / 1000)
   }
   return { session, user };
 }

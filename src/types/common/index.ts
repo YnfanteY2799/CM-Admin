@@ -21,4 +21,4 @@ export interface ISession extends SessionFlags {
   expires_at: Date;
 }
 
-export type SessionValidationResult = { session: ISession; user: User } | { session: null; user: null };
+export type SessionValidationResult = { session: ISession; user: ISessionUser } | { session: null; user: null };
