@@ -1,10 +1,18 @@
 import { prisma } from "@/db";
 
-export async function getUserByEmail(email?: string): Promise<any> {
+import type { TConsumableAction, ISessionUser } from "@/types/common";
+
+export async function getUserByEmail(email?: string): Promise<TConsumableAction<ISessionUser>> {
   try {
     const user = await prisma.user.findFirst({
       where: { email },
-      select: { email: true, hashed_password: true, Account_Status: { select: { name: true } } },
+      select: {
+        id: true,
+        email: true,
+        verified_email: true,
+        hashed_password: true,
+        Account_Status: { select: { name: true } },
+      },
     });
     console.log({ user });
     if (!user) return { message: "User does not exists" };

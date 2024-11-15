@@ -17,8 +17,7 @@ export async function serviceBasedLogin({ email, password }: TLoginFS): Promise<
   if (clientIP !== null && !ipBucket.check(clientIP, 1)) return { message: "Too many requests" };
 
   const user = await getUserByEmail(email);
-  console.log({ user });
-  if (!user) return { message: "user not exists" };
+  if (user) return { message: "user not exists" };
   if (!throttler.consume(user.id)) return { message: "Too many requests" };
 
   return { response: "logged" };
