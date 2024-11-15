@@ -48,7 +48,16 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
       user_id: true,
       expires_at: true,
       two_factor_verified: true,
-      user: { select: { email: true, username: true, verified_email: true } },
+      user: {
+        select: {
+          email: true,
+          username: true,
+          verified_email: true,
+          TOTPCredentials: { select: {} },
+          PassKeyCredentials: { select: {} },
+          SecurityKeysCredentials: { select: {} },
+        },
+      },
     },
   });
   if (!dbSession) return { session: null, user: null };
@@ -65,10 +74,10 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
     id: dbSession.user_id,
     email: dbSession.user.email,
     username: dbSession.user.username,
-    registeredTOTP: dbSession.user.,
-    registeredPasskey: dbSession.user.,
     verified_email: dbSession.user.verified_email,
-    registeredSecurityKey: dbSession.user.,
+    registeredTOTP: !!dbSession.user.TOTPCredentials,
+    registeredPasskey: !!dbSession.user.PassKeyCredentials,
+    registeredSecurityKey: !!dbSession.user.PassKeyCredentials,
   };
   if (user.registeredPasskey || user.registeredSecurityKey || user.registeredTOTP) user.registered2FA = true;
 
