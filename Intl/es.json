@@ -9,6 +9,7 @@
                "Or": "O"
           },
           "Errors": {
+               "tmr": "Demasiadas llamadas",
                "emerror": "Porfavor provea un Correo Electrónico valido!",
                "pwerror": "La contraseña provista no es valida"
           },

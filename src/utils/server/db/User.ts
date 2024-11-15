@@ -1,5 +1,4 @@
 import { prisma } from "@/db";
-
 import type { TConsumableAction, ISessionUser } from "@/types/common";
 
 export async function getUserByEmail(email?: string): Promise<TConsumableAction<ISessionUser>> {
@@ -15,10 +14,9 @@ export async function getUserByEmail(email?: string): Promise<TConsumableAction<
         Account_Status: { select: { name: true } },
       },
     });
-    if (!user) return { message: "User does not exists" };
+    if (!user) return { message: "udn" };
     return { data: user };
   } catch (e) {
-    console.log({ e });
-    return { message: "Error" };
+    return { message: "ecdb" };
   }
 }

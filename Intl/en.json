@@ -9,6 +9,7 @@
                "Or": "Or"
           },
           "Errors": {
+               "tmr": "Too many requests",
                "emerror": "The provided email is not valid!",
                "pwerror": "The provided password is not valid!"
           },

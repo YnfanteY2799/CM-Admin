@@ -20,14 +20,14 @@ const ipBucket = new RefillingTokenBucket<string>(20, 1);
 
 // TODO: Assumes X-Forwarded-For is always included.
 export async function serviceBasedLogin({ email, password }: TLoginFS): Promise<Omit<any, "JWT">> {
-  if (!globalPOSTRateLimit()) return { response: "not logged" };
+  if (!globalPOSTRateLimit()) return { response: "tmr" };
 
   const clientIP = (await headers()).get("X-Forwarded-For");
-  if (clientIP !== null && !ipBucket.check(clientIP, 1)) return { message: "Too many requests" };
+  if (clientIP !== null && !ipBucket.check(clientIP, 1)) return { message: "tmr" };
 
-  const { data, message } = await getUserByEmail(email);
-  if (data === undefined) return { message };
-  if (!throttler.consume(data.id)) return { message: "Too many requests" };
+  const { data: user, message } = await getUserByEmail(email);
+  if (user === undefined) return { message };
+  if (!throttler.consume(user.id)) return { message: "tmr" };
 
   return { response: "logged" };
 }
