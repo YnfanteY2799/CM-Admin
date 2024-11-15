@@ -1,6 +1,8 @@
 import { encodeBase32LowerCaseNoPadding, encodeHexLowerCase } from "@oslojs/encoding";
 import { sha256 } from "@oslojs/crypto/sha2";
+import { cookies } from "next/headers";
 import { prisma } from "@/db";
+import { cache } from "react";
 
 import type { SessionValidationResult, ISession, ISessionUser } from "@/types/common";
 
@@ -19,10 +21,10 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
   if (!dbSession) return { session: null, user: null };
 
   const session: ISession = {
-    id: dbSession.id,
-    user_id: dbSession.user_id,
-    expires_at: dbSession.expires_at,
     twoFactorVerified: dbSession.two_factor_verified,
+    expires_at: dbSession.expires_at,
+    user_id: dbSession.user_id,
+    id: dbSession.id,
   };
 
   const user: ISessionUser = {
@@ -43,12 +45,42 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
   }
   if (Date.now() >= session.expires_at.getTime() - 1000 * 60 * 60 * 24 * 15) {
     session.expires_at = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
-    await prisma.session.update({
-      data: { expires_at: new Date() },
-      where: { id: sessionId },
-    });
-
-    //     Math.floor(session.expires_at.getTime() / 1000)
+    const expires_at = Math.floor(session.expires_at.getTime() / 1000);
+    await prisma.session.update({ data: { expires_at: new Date() }, where: { id: sessionId } });
   }
   return { session, user };
+}
+
+export async function invalidateSession(sessionId: string): Promise<void> {
+  await prisma.session.delete({ where: { id: sessionId } });
+}
+
+export async function invalidateUserSessions(user_id: number): Promise<void> {
+  await prisma.session.delete({ where: { user_id } });
+}
+
+export const getCurrentSession = cache(async (): Promise<SessionValidationResult> => {
+  const token = (await cookies()).get("session")?.value ?? null;
+  if (!token) return { session: null, user: null };
+  return await validateSessionToken(token);
+});
+
+export async function setSessionTokenCookie(token: string, expiresAt: Date): Promise<void> {
+  (await cookies()).set("session", token, {
+    secure: process.env.NODE_ENV === "production",
+    expires: expiresAt,
+    httpOnly: true,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+
+export async function deleteSessionTokenCookie(): Promise<void> {
+  (await cookies()).set("session", "", {
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    httpOnly: true,
+    path: "/",
+    maxAge: 0,
+  });
 }

@@ -9,6 +9,7 @@ export async function getUserByEmail(email?: string): Promise<TConsumableAction<
       select: {
         id: true,
         email: true,
+        username: true,
         verified_email: true,
         hashed_password: true,
         Account_Status: { select: { name: true } },
