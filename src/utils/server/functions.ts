@@ -1,9 +1,7 @@
 "use server";
 import { type TimeSpanUnit, TimeSpan, createDate } from "oslo";
 import { alphabet, generateRandomString } from "oslo/crypto";
-import { encodeHexLowerCase } from "@oslojs/encoding";
 import { hash, verify } from "@node-rs/argon2";
-import { sha1 } from "@oslojs/crypto/sha1";
 
 export async function generateRandomSalt(): Promise<string> {
   return generateRandomString(16, alphabet("a-z", "A-Z", "0-9"));
