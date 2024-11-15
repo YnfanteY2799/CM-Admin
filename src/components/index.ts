@@ -13,3 +13,8 @@ export { default as NoiseWaves } from "./Backgrounds/Waves/index.tsx";
 export { default as LangSelectSwitcher } from "./Switchers/LangSelectSwitcher.tsx";
 export { default as ThemeSwitcher } from "./Switchers/ThemeSwitcher.tsx";
 /* Switchers */
+
+/* SVG */
+export { default as NortAmericanFlag } from "./svg/NortAmericanFlag.tsx";
+export { default as SpainFlag } from "./svg/SpainFlag.tsx";
+/* SVG */

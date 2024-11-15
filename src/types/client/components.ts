@@ -59,3 +59,8 @@ export interface IWavyBackgroundProps {
   children?: any;
   blur?: number;
 }
+
+export interface IGenericIconSvg {
+  size?: number;
+  className?: string;
+}
