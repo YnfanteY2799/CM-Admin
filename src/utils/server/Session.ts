@@ -36,7 +36,17 @@ export async function createSession(token: string, user_id: number, flags: ISess
 export async function validateSessionToken(id: string): Promise<SessionValidationResult> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(id)));
   const dbSession = await prisma.session.findFirst({
-    select: { id: true, user_id: true, expires_at: true, two_factor_verified: true },
+    select: {
+      id: true,
+      user_id: true,
+      expires_at: true,
+      two_factor_verified: true,
+      user: {
+        select: {
+          id: true,
+        },
+      },
+    },
     where: { id },
   });
   if (!dbSession) return { session: null, user: null };
@@ -49,10 +59,10 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
   };
 
   const user: ISessionUser = {
-    id: row.number(4),
+    id: dbSession.id,
     email: row.string(5),
     username: row.string(6),
-    emailVerified: Boolean(row.number(7)),
+    verified_email: Boolean(row.number(7)),
     registeredTOTP: Boolean(row.number(8)),
     registeredPasskey: Boolean(row.number(9)),
     registeredSecurityKey: Boolean(row.number(10)),
@@ -64,11 +74,13 @@ export async function validateSessionToken(id: string): Promise<SessionValidatio
     await prisma.session.delete({ where: { id: sessionId } });
     return { session: null, user: null };
   }
+
   if (Date.now() >= session.expires_at.getTime() - 1000 * 60 * 60 * 24 * 15) {
     session.expires_at = new Date(Date.now() + 1000 * 60 * 60 * 24 * 30);
-    const expires_at = Math.floor(session.expires_at.getTime() / 1000);
-    await prisma.session.update({ data: { expires_at: new Date() }, where: { id: sessionId } });
+    const expires_at = Math.floor(session.expires_at.getTime() / 1000).toString();
+    await prisma.session.update({ data: { expires_at }, where: { id: sessionId } });
   }
+
   return { session, user };
 }
 
@@ -81,7 +93,7 @@ export async function setSessionAs2FAVerified(id: string): Promise<void> {
 }
 
 export async function invalidateUserSessions(user_id: number): Promise<void> {
-  await prisma.session.delete({ where: { user_id } });
+  //   await prisma.session.delete({ where: { user_id } });
 }
 
 export const getCurrentSession = cache(async (): Promise<SessionValidationResult> => {

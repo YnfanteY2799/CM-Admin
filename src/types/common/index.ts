@@ -9,7 +9,12 @@ export interface PassKeyCredentialsObj {
 
 export type TConsumableAction<G> = { message: string } | G;
 
-export interface ISessionUser extends Omit<User, "create_time" | "update_time" | "status_id"> {}
+export interface ISessionUser extends Omit<User, "create_time" | "update_time" | "status_id"> {
+  registered2FA?: boolean;
+  registeredTOTP?: boolean;
+  registeredPasskey?: boolean;
+  registeredSecurityKey?: boolean;
+}
 
 export interface ISessionFlags {
   twoFactorVerified: boolean;
