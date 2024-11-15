@@ -14,8 +14,9 @@
                "pwerror": "La contraseña provista no es valida"
           },
           "Login": {
-               "WelcomeBack": "Bienvenido",
-               "AlterLogin": " ¿ No tienes una cuenta aun ?"
+               "AlterLogin": " ¿ No tienes una cuenta aun ?",
+               "forgotenPassword": "¿Olvidó su contraseña?",
+               "WelcomeBack": "Bienvenido"
           },
           "Status": {
                "loading": "Cargando",

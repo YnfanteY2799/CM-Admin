@@ -1,8 +1,8 @@
 "use client";
+import { ResizableDiv, ThemeSwitcher, LangSelectSwitcher } from "@/components";
 import { type TLoginFS, LoginFormSchema } from "@/utils/common";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { passKeyBasedLogin, serviceBasedLogin } from "@/api";
-import { ResizableDiv, ThemeSwitcher } from "@/components";
 import { createWebAuthnChallenge } from "@/utils/client";
 import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -85,18 +85,19 @@ export default function LoginForm(): ReactNode {
           <div></div>
           <p></p>
           <div className="flex justify-between gap-6">
+            <LangSelectSwitcher />
             <ThemeSwitcher />
           </div>
         </div>
 
         {/* Header */}
         <h1 className="text-2xl font-bold text-center mb-2">{commons("Login.WelcomeBack")}</h1>
-        <p className="text-zinc-400 text-center text-sm mb-6">
+        {/* <p className="text-zinc-400 text-center text-sm mb-6">
           {commons("Login.AlterLogin")}
-          {/* <Link href="/signup" className="text-blue-500 hover:text-blue-400">
+         <Link href="/signup" className="text-blue-500 hover:text-blue-400">
             Sign up
-          </Link> */}
-        </p>
+          </Link> 
+        </p> */}
 
         <ResizableDiv>
           {/* Form */}
@@ -127,6 +128,9 @@ export default function LoginForm(): ReactNode {
               label={commons("Form_Labels.password")}
               errorMessage={password && commons(`Errors.${password.message}`)}
             />
+            <div className="flex justify-between">
+              <p>{commons("Login.forgotenPassword")}</p>
+            </div>
           </form>
           <Button
             size="md"

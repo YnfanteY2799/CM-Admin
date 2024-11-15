@@ -14,8 +14,9 @@
                "pwerror": "The provided password is not valid!"
           },
           "Login": {
-               "WelcomeBack": "Welcome Back",
-               "AlterLogin": "Don't you have an Account yet ?"
+               "AlterLogin": "Don't you have an Account yet ?",
+               "forgotenPassword": "Forgot your password?",
+               "WelcomeBack": "Welcome Back"
           },
           "Status": {
                "loading": "Loading",

@@ -9,7 +9,7 @@ export { default as LinesBeams } from "./Backgrounds/Lines/index.tsx";
 export { default as NoiseWaves } from "./Backgrounds/Waves/index.tsx";
 /* Backgrounds */
 
-/* Buttons */
-export { default as ThemeSwitcher } from "./Buttons/ThemeSwitcher.tsx";
-
-/* Buttons */
+/* Switchers */
+export { default as LangSelectSwitcher } from "./Switchers/LangSelectSwitcher.tsx";
+export { default as ThemeSwitcher } from "./Switchers/ThemeSwitcher.tsx";
+/* Switchers */
