@@ -1,8 +1,8 @@
 "use client";
+import { passKeyBasedLogin, serviceBasedLogin, serviceBasedForgotPassword } from "@/api";
 import { ResizableDiv, ThemeSwitcher, LangSelectSwitcher } from "@/components";
 import { type TLoginFS, LoginFormSchema } from "@/utils/common";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { passKeyBasedLogin, serviceBasedLogin } from "@/api";
 import { createWebAuthnChallenge } from "@/utils/client";
 import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,10 +29,7 @@ export default function LoginForm(): ReactNode {
     register: loginRegister,
     formState: loginFormState,
     handleSubmit: handleLoginSubmit,
-  } = useForm<TLoginFS>({
-    defaultValues: { email: "", password: "" },
-    resolver: zodResolver(LoginFormSchema),
-  });
+  } = useForm<TLoginFS>({ defaultValues: { email: "", password: "" }, resolver: zodResolver(LoginFormSchema) });
 
   const { email: loginEmail, password } = loginFormState.errors;
 
@@ -94,13 +91,6 @@ export default function LoginForm(): ReactNode {
 
         {/* Header */}
         <h1 className="text-2xl font-bold text-center mb-2">{commons("Login.WelcomeBack")}</h1>
-        {/* <p className="text-zinc-400 text-center text-sm mb-6">
-          {commons("Login.AlterLogin")}
-         <Link href="/signup" className="text-blue-500 hover:text-blue-400">
-            Sign up
-          </Link> 
-        </p> */}
-
         <ResizableDiv>
           {/* Form */}
           <form ref={formRef} onSubmit={handleLoginSubmit(onLoginSubmit)} className="flex flex-col gap-[8px] mb-8">
@@ -131,7 +121,7 @@ export default function LoginForm(): ReactNode {
               errorMessage={password && commons(`Errors.${password.message}`)}
             />
             <div className="flex justify-between">
-              <p onClick={changeForm} className="hover:text-primary hover:underline hover:cursor-pointer">
+              <p onClick={changeForm} className="text-sm hover:text-primary hover:underline hover:cursor-pointer">
                 {commons("Login.forgotenPassword")}
               </p>
             </div>

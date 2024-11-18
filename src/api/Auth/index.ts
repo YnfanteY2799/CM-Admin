@@ -89,3 +89,5 @@ export async function passKeyBasedLogin(data: PassKeyCredentialsObj): Promise<an
 
   return true;
 }
+
+export async function serviceBasedForgotPassword({ email }: { email?: string }): Promise<any> {}
