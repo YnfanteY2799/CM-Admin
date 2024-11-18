@@ -6,3 +6,9 @@ export const LoginFormSchema = z.object({
 });
 
 export type TLoginFS = z.infer<typeof LoginFormSchema>;
+
+export const ForgotFormSchema = z.object({
+  email: z.string().email("emerror").min(1, "emerror"),
+});
+
+export type TForgotFS = z.infer<typeof ForgotFormSchema>;

@@ -1,7 +1,7 @@
 "use client";
 import { passKeyBasedLogin, serviceBasedLogin, serviceBasedForgotPassword } from "@/api";
 import { ResizableDiv, ThemeSwitcher, LangSelectSwitcher } from "@/components";
-import { type TLoginFS, LoginFormSchema } from "@/utils/common";
+import { type TLoginFS, LoginFormSchema, TForgotFS } from "@/utils/common";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { createWebAuthnChallenge } from "@/utils/client";
 import { type ReactNode, useRef, useState } from "react";
@@ -18,9 +18,11 @@ export default function LoginForm(): ReactNode {
 
   // State
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [IsForgot, setIsForgot] = useState<boolean>(false);
 
   // Ref's
-  const formRef = useRef<HTMLFormElement>(null);
+  const loginRef = useRef<HTMLFormElement>(null);
+  const forgRef = useRef<HTMLFormElement>(null);
 
   // RHF
   const {
@@ -35,7 +37,7 @@ export default function LoginForm(): ReactNode {
 
   // Functions
   function handleSyntheticSubmit(): void {
-    const curr = formRef.current;
+    const curr = isLoading ? forgRef.current : loginRef.current;
     if (curr) curr.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   }
 
@@ -57,7 +59,7 @@ export default function LoginForm(): ReactNode {
     }
   }
 
-  function changeForm() {}
+  const changeForm = () => setIsForgot((old) => !old);
 
   // Form handle
   const onLoginSubmit: SubmitHandler<TLoginFS> = async (data) => {
@@ -75,6 +77,8 @@ export default function LoginForm(): ReactNode {
     setIsLoading(false);
   };
 
+  const onForgotSubmit: SubmitHandler<TForgotFS> = async (data) => {};
+
   return (
     <div className="w-full max-w-md p-6 relative">
       <div className="bg-background/90 light:bg-background/10 backdrop-blur-sm rounded-lg p-8 shadow-xl border border-zinc-800">
@@ -84,8 +88,8 @@ export default function LoginForm(): ReactNode {
           <div></div>
           <p></p>
           <div className="flex justify-between gap-6">
-            <LangSelectSwitcher />
             <ThemeSwitcher />
+            <LangSelectSwitcher />
           </div>
         </div>
 
@@ -93,39 +97,58 @@ export default function LoginForm(): ReactNode {
         <h1 className="text-2xl font-bold text-center mb-2">{commons("Login.WelcomeBack")}</h1>
         <ResizableDiv>
           {/* Form */}
-          <form ref={formRef} onSubmit={handleLoginSubmit(onLoginSubmit)} className="flex flex-col gap-[8px] mb-8">
-            <Input
-              size="lg"
-              radius="md"
-              type="email"
-              maxLength={100}
-              variant="bordered"
-              isReadOnly={isLoading}
-              labelPlacement="outside"
-              isInvalid={!!loginEmail}
-              {...loginRegister("email")}
-              label={commons("Form_Labels.email")}
-              errorMessage={loginEmail && commons(`Errors.${loginEmail.message}`)}
-            />
-            <Input
-              size="lg"
-              radius="md"
-              type="password"
-              maxLength={100}
-              variant="bordered"
-              isInvalid={!!password}
-              isReadOnly={isLoading}
-              labelPlacement="outside"
-              {...loginRegister("password")}
-              label={commons("Form_Labels.password")}
-              errorMessage={password && commons(`Errors.${password.message}`)}
-            />
-            <div className="flex justify-between">
-              <p onClick={changeForm} className="text-sm hover:text-primary hover:underline hover:cursor-pointer">
-                {commons("Login.forgotenPassword")}
-              </p>
-            </div>
-          </form>
+          {IsForgot ? (
+            <form ref={forgRef} onSubmit={handleLoginSubmit(onLoginSubmit)} className="flex flex-col gap-[8px] mb-8">
+              <Input
+                size="lg"
+                radius="md"
+                type="email"
+                maxLength={100}
+                variant="bordered"
+                isReadOnly={isLoading}
+                labelPlacement="outside"
+                isInvalid={!!loginEmail}
+                {...loginRegister("email")}
+                label={commons("Form_Labels.email")}
+                errorMessage={loginEmail && commons(`Errors.${loginEmail.message}`)}
+              />
+            </form>
+          ) : (
+            <form ref={loginRef} onSubmit={handleLoginSubmit(onLoginSubmit)} className="flex flex-col gap-[8px] mb-8">
+              <Input
+                size="lg"
+                radius="md"
+                type="email"
+                maxLength={100}
+                variant="bordered"
+                isReadOnly={isLoading}
+                labelPlacement="outside"
+                isInvalid={!!loginEmail}
+                {...loginRegister("email")}
+                label={commons("Form_Labels.email")}
+                errorMessage={loginEmail && commons(`Errors.${loginEmail.message}`)}
+              />
+              <Input
+                size="lg"
+                radius="md"
+                type="password"
+                maxLength={100}
+                variant="bordered"
+                isInvalid={!!password}
+                isReadOnly={isLoading}
+                labelPlacement="outside"
+                {...loginRegister("password")}
+                label={commons("Form_Labels.password")}
+                errorMessage={password && commons(`Errors.${password.message}`)}
+              />
+              <div className="flex justify-between ml-2">
+                <p onClick={changeForm} className="text-sm hover:text-primary hover:underline hover:cursor-pointer">
+                  {commons("Login.forgotenPassword")}
+                </p>
+              </div>
+            </form>
+          )}
+
           <Button
             size="md"
             type="submit"
@@ -134,9 +157,9 @@ export default function LoginForm(): ReactNode {
             isLoading={isLoading}
             isDisabled={isLoading}
             onPress={handleSyntheticSubmit}
-            startContent={<LogIn size={20} />}
+            startContent={IsForgot ? <LogIn size={20} /> : <></>}
           >
-            {commons("Form_Labels.login")}
+            {IsForgot ? commons("Form_Labels.forgot") : commons("Form_Labels.login")}
           </Button>
         </ResizableDiv>
 

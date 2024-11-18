@@ -2,11 +2,12 @@
      "Lang": "Español",
      "Common": {
           "Form_Labels": {
+               "Or": "Or",
                "email": "Email",
-               "password": "Password",
-               "PassKeyLogin": "Login with a Pass key",
                "login": "Login",
-               "Or": "Or"
+               "password": "Password",
+               "forgot": "Recover your password",
+               "PassKeyLogin": "Login with a Pass key"
           },
           "Errors": {
                "tmr": "Too many requests",
