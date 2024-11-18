@@ -23,9 +23,9 @@ export default function LangSelectSwitcher(): ReactNode {
           <FlagIcons name={locale} />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Dropdown Variants" color="primary" variant="light" onAction={onSelectionChange}>
+      <DropdownMenu aria-label="Dropdown Variants" color="primary" variant="light">
         {locales.map((x) => (
-          <DropdownItem key={x} startContent={<FlagIcons name={x} />}>
+          <DropdownItem key={x} href={"/home"} startContent={<FlagIcons name={x} />}>
             {x}
           </DropdownItem>
         ))}

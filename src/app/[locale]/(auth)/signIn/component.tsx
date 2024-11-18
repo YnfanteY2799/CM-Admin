@@ -8,7 +8,7 @@ import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { encodeBase64 } from "@oslojs/encoding";
-import { KeyRound, LogIn } from "lucide-react";
+import { ChevronLeft, KeyRound, LogIn, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
@@ -85,9 +85,15 @@ export default function LoginForm(): ReactNode {
         {/* Logo */}
 
         <div className="flex justify-between">
-          <div></div>
+          <div>
+            {IsForgot ? (
+              <Button isIconOnly variant="light" children={<ChevronLeft size={20} />} size="sm" onPress={changeForm} />
+            ) : (
+              <></>
+            )}
+          </div>
           <p></p>
-          <div className="flex justify-between gap-6">
+          <div className="flex justify-between gap-2">
             <ThemeSwitcher />
             <LangSelectSwitcher />
           </div>
@@ -157,7 +163,7 @@ export default function LoginForm(): ReactNode {
             isLoading={isLoading}
             isDisabled={isLoading}
             onPress={handleSyntheticSubmit}
-            startContent={IsForgot ? <LogIn size={20} /> : <></>}
+            endContent={IsForgot ? <Send size={20} className="mt-1" /> : <LogIn size={20} className="mt-1" />}
           >
             {IsForgot ? commons("Form_Labels.forgot") : commons("Form_Labels.login")}
           </Button>

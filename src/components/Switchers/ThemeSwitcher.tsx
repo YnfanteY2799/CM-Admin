@@ -3,6 +3,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
+import { Button } from "@nextui-org/react";
 
 export default function ThemeSwitcher(): ReactNode {
   const [mounted, setMounted] = useState(false);
@@ -15,10 +16,10 @@ export default function ThemeSwitcher(): ReactNode {
   const toggleTheme = () => setTheme((old) => (old === "light" ? "dark" : "light"));
 
   return (
-    <button onClick={toggleTheme} className="rounded-full flex items-center justify-center transition-colors duration-300">
+    <Button onClick={toggleTheme} isIconOnly className="transition-colors duration-300" size="sm" variant="light">
       <motion.div animate={{ rotate: isDark ? 0 : 360 }} transition={{ duration: 0.5, ease: "easeInOut" }}>
-        {isDark ? <Moon className="text-primary" /> : <Sun className="text-primary" />}
+        {isDark ? <Moon className="text-primary" size={20} /> : <Sun className="text-primary" size={20} />}
       </motion.div>
-    </button>
+    </Button>
   );
 }
