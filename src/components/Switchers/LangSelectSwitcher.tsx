@@ -1,31 +1,32 @@
+"use client";
 import { Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { locales, usePathname, useRouter } from "@/i18n/routing";
+import { type Key, type ReactNode, useTransition } from "react";
 import FlagIcons from "./parts/FlagIcons";
 import { useLocale } from "next-intl";
 
-import type { Key, ReactNode } from "react";
-
 export default function LangSelectSwitcher(): ReactNode {
+  const [isPending, startTransition] = useTransition();
   const { replace } = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
 
-  function onSelectionChange(k: Key): void {
-    const locale = k.toString();
-    alert(locale);
-    replace({ pathname, query: { locale } });
+  function onActionChange(key: Key) {
+    const locale = key.toString();
+    // @ts-expect-error
+    startTransition(() => replace({ pathname, params: {} }, { locale }));
   }
 
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button variant="light" size="sm" className="capitalize" isIconOnly>
+        <Button variant="light" size="sm" className="capitalize" isIconOnly isDisabled={isPending}>
           <FlagIcons name={locale} />
         </Button>
       </DropdownTrigger>
-      <DropdownMenu aria-label="Dropdown Variants" color="primary" variant="light">
+      <DropdownMenu aria-label="Dropdown Variants" color="primary" variant="bordered" onAction={onActionChange}>
         {locales.map((x) => (
-          <DropdownItem key={x} href={"/home"} startContent={<FlagIcons name={x} />}>
+          <DropdownItem key={x} startContent={<FlagIcons name={x} />}>
             {x}
           </DropdownItem>
         ))}
