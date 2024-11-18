@@ -60,6 +60,8 @@ export default function LoginForm(): ReactNode {
     }
   }
 
+  function changeForm() {}
+
   // Form handle
   const onLoginSubmit: SubmitHandler<TLoginFS> = async (data) => {
     setIsLoading(true);
@@ -129,7 +131,9 @@ export default function LoginForm(): ReactNode {
               errorMessage={password && commons(`Errors.${password.message}`)}
             />
             <div className="flex justify-between">
-              <p>{commons("Login.forgotenPassword")}</p>
+              <p onClick={changeForm} className="hover:text-primary hover:underline hover:cursor-pointer">
+                {commons("Login.forgotenPassword")}
+              </p>
             </div>
           </form>
           <Button
