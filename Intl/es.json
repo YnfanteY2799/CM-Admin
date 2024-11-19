@@ -17,7 +17,8 @@
           "Login": {
                "AlterLogin": " ¿ No tienes una cuenta aun ?",
                "forgotenPassword": "¿Olvidó su contraseña?",
-               "WelcomeBack": "Bienvenido"
+               "WelcomeBack": "Bienvenido",
+               "signup": "Registrate"
           },
           "Status": {
                "loading": "Cargando",

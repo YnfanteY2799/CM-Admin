@@ -17,11 +17,12 @@
           "Login": {
                "AlterLogin": "Don't you have an Account yet ?",
                "forgotenPassword": "Forgot your password?",
-               "WelcomeBack": "Welcome Back"
+               "WelcomeBack": "Welcome Back",
+               "signup": "Sign Up"
           },
           "Status": {
                "loading": "Loading",
-               "welcome": "Welcome Back {username} !"
+               "welcome": "Welcome Back {username}!"
           },
           "Langs": {
                "en": "English",
