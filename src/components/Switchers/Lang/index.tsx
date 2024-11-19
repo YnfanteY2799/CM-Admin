@@ -4,13 +4,11 @@ import { ReactNode } from "react";
 
 export default function LangSwitcher(): ReactNode {
   // Hooks
-  const { Commons } = useMessages();
+  const { Common } = useMessages();
   const locale = useLocale();
 
-  console.log({ Commons });
-
   return (
-    <NextIntlClientProvider messages={Commons as AbstractIntlMessages} locale={locale}>
+    <NextIntlClientProvider messages={Common as AbstractIntlMessages} locale={locale}>
       <LangSelectSwitcher />
     </NextIntlClientProvider>
   );

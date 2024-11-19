@@ -27,7 +27,7 @@ export default function LangSelectSwitcher(): ReactNode {
       </DropdownTrigger>
       <DropdownMenu aria-label="Dropdown Variants" color="primary" variant="bordered" onAction={onActionChange}>
         {locales.map((x) => (
-          <DropdownItem key={x} startContent={<FlagIcons name={x} />}>
+          <DropdownItem key={x} endContent={<FlagIcons name={x} />}>
             {t(x)}
           </DropdownItem>
         ))}
