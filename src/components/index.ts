@@ -10,7 +10,7 @@ export { default as NoiseWaves } from "./Backgrounds/Waves/index.tsx";
 /* Backgrounds */
 
 /* Switchers */
-export { default as LangSelectSwitcher } from "./Switchers/LangSelectSwitcher.tsx";
+export { default as LangSelectSwitcher } from "./Switchers/Lang/LangSelectSwitcher.tsx";
 export { default as ThemeSwitcher } from "./Switchers/ThemeSwitcher.tsx";
 /* Switchers */
 

@@ -1,5 +1,5 @@
 {
-     "Lang": "English",
+     "Lang": "Español",
      "Common": {
           "Form_Labels": {
                "PassKeyLogin": "Iniciar Sesion con una llave de acceso",
@@ -22,6 +22,10 @@
                "loading": "Cargando",
                "success_action": "Accion Éxitosa",
                "welcome": "Bienvenido otra vez, {username} !"
+          },
+          "Langs": {
+               "en": "Ingles",
+               "es": "Español"
           }
      }
 }

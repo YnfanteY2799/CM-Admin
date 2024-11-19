@@ -1,5 +1,5 @@
 {
-     "Lang": "Español",
+     "Lang": "English",
      "Common": {
           "Form_Labels": {
                "Or": "Or",
@@ -22,6 +22,10 @@
           "Status": {
                "loading": "Loading",
                "welcome": "Welcome Back {username} !"
+          },
+          "Langs": {
+               "en": "English",
+               "es": "Spanish"
           }
      }
 }

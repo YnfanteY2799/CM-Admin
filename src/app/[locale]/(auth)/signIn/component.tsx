@@ -2,14 +2,15 @@
 import { passKeyBasedLogin, serviceBasedLogin, serviceBasedForgotPassword } from "@/api";
 import { ResizableDiv, ThemeSwitcher, LangSelectSwitcher } from "@/components";
 import { type TLoginFS, LoginFormSchema, TForgotFS } from "@/utils/common";
+import { ChevronLeft, KeyRound, LogIn, Send } from "lucide-react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { createWebAuthnChallenge } from "@/utils/client";
 import { type ReactNode, useRef, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input } from "@nextui-org/react";
 import { encodeBase64 } from "@oslojs/encoding";
-import { ChevronLeft, KeyRound, LogIn, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { toast } from "sonner";
 
 export default function LoginForm(): ReactNode {
@@ -86,11 +87,14 @@ export default function LoginForm(): ReactNode {
 
         <div className="flex justify-between">
           <div>
-            {IsForgot ? (
-              <Button isIconOnly variant="light" children={<ChevronLeft size={20} />} size="sm" onPress={changeForm} />
-            ) : (
-              <></>
-            )}
+            <Button
+              size="sm"
+              isIconOnly
+              variant="light"
+              onPress={changeForm}
+              className={IsForgot ? "" : "hidden"}
+              children={<ChevronLeft size={20} />}
+            />
           </div>
           <p></p>
           <div className="flex justify-between gap-2">
@@ -101,6 +105,12 @@ export default function LoginForm(): ReactNode {
 
         {/* Header */}
         <h1 className="text-2xl font-bold text-center mb-2">{commons("Login.WelcomeBack")}</h1>
+        <p className="text-zinc-400 text-center text-sm mb-6">
+          {commons("Login.AlterLogin")}
+          <Link href="/signup" className="text-blue-500 hover:text-blue-400">
+            Sign up
+          </Link>
+        </p>
         <ResizableDiv>
           {/* Form */}
           {IsForgot ? (
@@ -154,7 +164,6 @@ export default function LoginForm(): ReactNode {
               </div>
             </form>
           )}
-
           <Button
             size="md"
             type="submit"
