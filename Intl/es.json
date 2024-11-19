@@ -3,6 +3,7 @@
      "Common": {
           "Form_Labels": {
                "PassKeyLogin": "Iniciar Sesion con una llave de acceso",
+               "forgot": "Recupera tu contraseña",
                "email": "Correo Electrónico",
                "login": "Iniciar Sesion",
                "password": "Contraseña",

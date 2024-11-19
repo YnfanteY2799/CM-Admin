@@ -105,10 +105,10 @@ export default function LoginForm(): ReactNode {
 
         {/* Header */}
         <h1 className="text-2xl font-bold text-center mb-2">{commons("Login.WelcomeBack")}</h1>
-        <p className="text-zinc-400 text-center text-sm mb-6">
-          {commons("Login.AlterLogin")}
+        <p className="text-default-800 text-center text-sm">{commons("Login.AlterLogin")}</p>
+        <p className="text-default-800 text-center text-sm">
           <Link href="/signup" className="text-blue-500 hover:text-blue-400">
-            Sign up
+            {commons("Login.signup")}
           </Link>
         </p>
         <ResizableDiv>
