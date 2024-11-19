@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
+import { Button } from "@nextui-org/react";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion } from "framer-motion";
-import { Button } from "@nextui-org/react";
 
 export default function ThemeSwitcher(): ReactNode {
   const [mounted, setMounted] = useState(false);

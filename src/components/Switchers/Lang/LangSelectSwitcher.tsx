@@ -2,11 +2,12 @@
 import { Dropdown, DropdownTrigger, Button, DropdownMenu, DropdownItem } from "@nextui-org/react";
 import { locales, usePathname, useRouter } from "@/i18n/routing";
 import { type Key, type ReactNode, useTransition } from "react";
-import FlagIcons from "../parts/FlagIcons";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import FlagIcons from "../Theme/parts/FlagIcons";
 
 export default function LangSelectSwitcher(): ReactNode {
   const [isPending, startTransition] = useTransition();
+  const t = useTranslations("Langs");
   const { replace } = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
@@ -27,7 +28,7 @@ export default function LangSelectSwitcher(): ReactNode {
       <DropdownMenu aria-label="Dropdown Variants" color="primary" variant="bordered" onAction={onActionChange}>
         {locales.map((x) => (
           <DropdownItem key={x} startContent={<FlagIcons name={x} />}>
-            {x}
+            {t(x)}
           </DropdownItem>
         ))}
       </DropdownMenu>
