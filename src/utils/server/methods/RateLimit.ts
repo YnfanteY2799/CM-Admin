@@ -13,9 +13,7 @@ export class RefillingTokenBucket<_Key> {
 
   public check(key: _Key, cost: number): boolean {
     const bucket = this.storage.get(key) ?? null;
-    if (bucket === null) {
-      return true;
-    }
+    if (bucket === null) return true;
     const now = Date.now();
     const refill = Math.floor((now - bucket.refilledAt) / (this.refillIntervalSeconds * 1000));
     if (refill > 0) {
